@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import { globalStyle } from "../styles/global";
-import { Container, Header } from "../styles/pages/App";
+import { Container, Header } from "../styles/pages/app";
 
 import logoImg from '../assets/logo.svg'
 
