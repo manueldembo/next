@@ -3,6 +3,11 @@ const { warnOptionHasBeenMovedOutOfExperimental } = require('next/dist/server/co
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: [
+      'files.stripe.com'
+    ]
+  }
 }
 
 module.exports = nextConfig
