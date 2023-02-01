@@ -12,10 +12,15 @@ interface ProcutProps {
         imageUrl: string
         price: number
         description: string
+        defaultPriceId: string
     }
 }
 
 export default function Product({ product }: ProcutProps) {
+    function handleByProduct() {
+        console.log(product.defaultPriceId)
+    }
+
     const { isFallback} = useRouter()
 
     if(isFallback) {
@@ -33,7 +38,7 @@ export default function Product({ product }: ProcutProps) {
             <span>{ product.price }</span>
             <p>{product.description}</p>
 
-            <button>
+            <button onClick={handleByProduct}>
                 Comprar agora
             </button>
         </ProductDetails>
@@ -71,7 +76,8 @@ export const getStaticProps: GetStaticProps<any, {id: string}> = async ({ params
                 style: 'currency',
                 currency: 'AOA',
             }).format(price.unit_amount / 100),
-            description: product.description
+            description: product.description,
+            defaultPriceId: price.id,
           }
         },
         revalidate: 60 * 60 * 2, //2 horasx
