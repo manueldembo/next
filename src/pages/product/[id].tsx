@@ -4,6 +4,8 @@ import { stripe } from '../../lib/stripe';
 import Image from "next/image";
 import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/pages/product";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { useState } from "react";
 
 interface ProcutProps {
     product: {
@@ -17,8 +19,24 @@ interface ProcutProps {
 }
 
 export default function Product({ product }: ProcutProps) {
-    function handleByProduct() {
-        console.log(product.defaultPriceId)
+    const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+    async function handleByProduct() {
+        try {
+            setIsCreatingCheckoutSession(true)
+
+            const response = await axios.post('/api/checkout', {
+                priceId: product.defaultPriceId,
+            })
+
+            const { checkoutUrl } = response.data
+
+            window.location.href = checkoutUrl
+        }catch(err) {
+            setIsCreatingCheckoutSession(true)
+
+            alert('Falha ao direcionar para  checkpoint')
+        }
     }
 
     const { isFallback} = useRouter()
